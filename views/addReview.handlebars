@@ -1,0 +1,77 @@
+
+    <script src="/socket.io/socket.io.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script>
+    var socket = io();
+
+    $('#addReview').submit(function() {
+            var rating = $('#rating').val();
+            var comment = ('#rating').val();
+            var image = $('#image').val();
+            var author = $('#author').val();
+            var date = $('#date').val();
+
+            $('#rating').val('');
+            $('#author').val('');
+            $('#rating').val('');
+            $('#image').val('');
+            $('#date').val();
+            $.ajax({
+                type: "POST",
+                url: '/addReview',
+                data: {
+                    rating: rating,
+                    comment: comment,
+                    image: image,
+                    author: author,
+                    date: date
+                        },
+                success: function(data, status){
+                    console.log(data);
+                }
+            });
+            return false;
+        });
+
+        socket.on('new review', function(review) {
+            $('#reviewList').append($('<li>').text("Rating out of 5.0: " + review.rating));
+            $('#reviewList').append($('<li>').text(review.author + " " + review.date));
+            $('#reviewList').append($('<li>').text("Comment: " + review.comment + review.image));
+        });
+    </script>
+
+    <div id="featured">
+        <div class="container">
+            <div class="title">
+                <h3>Add New Review</h3>
+            </div>
+            <article>
+                <form method="POST" action="/addReview">
+                    <div class="input-field">
+                        <label>Rating:</label> <br>
+                        <input type="text" name="name" size="50" placeholder="Rating out of 5.0">
+                    </div>
+                     <div class="input-field">
+                        <label>Author:</label> <br>
+                        <input type="text" name="author" size="50" placeholder="Author Name...">
+                    </div>
+                    <div class="input-field">
+                        <label>Date:</label> <br>
+                        <input type="text" name="date" size="50" placeholder="Enter today's date">
+                    </div>
+                    <div class="input-field">
+                        <label>Comment:</label> <br>
+                        <input type="text" name="comment" size="50" placeholder="Comments...">
+                    </div>
+                    <div class="input-field">
+                        <label>Image:</label> <br>
+                        <input type="text" name="image" size="50" placeholder="Paste image URL here">
+                    </div>
+                </form>
+            </article>
+
+        </div>
+        <ul class="actions">
+            <button type="submit">Add New Review</button>
+        </ul>
+    </div>

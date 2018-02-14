@@ -1,0 +1,94 @@
+<div id="wrapper">
+    <div id="header-wrapper">
+    <div id="header" class="container">
+        <div id="logo">
+            <a href="#"><h1>MacroMore</h1></a>
+        </div>
+
+        <!-- nav bar -->
+    <div id= "menu">
+        <ul>
+            <li><a href="/" accesskey="1" title="All Recipes">All Recipes</a></li>
+            <li><a href="/lowcarb" accesskey="2" title="Low Carb Recipes">Low Carb Recipes</a></li>
+            <li><a href="/highprotein" accesskey="3" title="High Protein Recipes">High Protein Recipe</a></li>
+            <li><a href="/lowfat" accesskey="4" title="Low Fat Recipes">Low Fat Recipes</a></li>
+            <li><a href="/lowcalorie" accesskey="5" title="Low Calorie Recipes">Low Calorie Recipes</a></li>
+        </ul>
+    </div>
+</div>
+</div>
+        <div id="extra" class="container">
+        {{#if recipe}}
+            <div class="title">
+                <h2>{{recipe.name}}</h2>
+            </div>
+            <ul>
+                <li>Written by {{recipe.author}}</li>
+                <li>Number of servings: {{recipe.servings}}</li>
+                <li>Calories per serving: {{recipe.calories}}</li>
+                <li>Protein per serving (g): {{recipe.protein}}</li>
+                <li>Carbohydrates per serving (g): {{recipe.carbs}}</li>
+                <li>Fats per serving (g): {{recipe.fats}}</li>
+                <li>Ingredients: {{recipe.ingredients}}</li>
+                <li>Directions: {{recipe.directions}}</li>
+                <br>
+            </ul>
+        {{else}}
+            <br>Recipe does not exist.
+        {{/if}}
+
+            <h3>Reviews</h3>
+
+            <ul id="reviewList">
+                {{#if review}}
+                {{#each review}}
+                    <li>Rating out of 5.0: {{this.rating}}</li>
+                    <li>By {{this.author}} on {{this.date}}</li>
+                    <li>Comment: {{this.comment}}</li>
+                    <li>{{this.image}}</li>
+                    <br>
+                {{/each}}
+                {{else}}
+                <br> No reviews yet.
+                {{/if}}
+            </ul>
+
+        </div>
+        <div id="featured">
+            <div class="container">
+                <div class="title">
+                    <h2>Add New Review</h2>
+                </div>
+                <article>
+                    <form method="POST" action="/add/{{recipe.id}}">
+                        <ul>
+                        <li>* = Required</li>
+                    </ul>
+                        <div class="input-field">
+                            <label>*Rating:</label> <br>
+                            <input type="text" name="rating" size="50" placeholder="Rating out of 5.0">
+                        </div>
+                         <div class="input-field">
+                            <label>*Author:</label> <br>
+                            <input type="text" name="author" size="50" placeholder="Author Name...">
+                        </div>
+                        <div class="input-field">
+                            <label>*Date:</label> <br>
+                            <input type="text" name="date" size="50" placeholder="Enter today's date">
+                        </div>
+                        <div class="input-field">
+                            <label>Comment:</label> <br>
+                            <input type="text" name="comment" size="50" placeholder="Comments...">
+                        </div>
+                        <div class="input-field">
+                            <label>Image:</label> <br>
+                            <input type="text" name="image" size="50" placeholder="Paste image URL here">
+                        </div>
+                        <ul class="actions">
+                            <button type="submit">Add New Review</button>
+                        </ul>
+                    </form>
+                </article>
+            </div>
+        </div>
+    </div>

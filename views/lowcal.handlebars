@@ -1,0 +1,89 @@
+<div id="wrapper">
+    <div id="header-wrapper">
+    <div id="header" class="container">
+        <div id="logo">
+            <a href="#"><h1>MacroMore</h1></a>
+        </div>
+    <!-- nav bar -->
+    <div id= "menu">
+        <ul>
+            <!--<li class="current_page_item"><a href="#" accesskey="1" title="Homepage"></a></li>-->
+            <li><a href="/" accesskey="1" title="All Recipes">All Recipes</a></li>
+            <li><a href="/lowcarb" accesskey="2" title="Low Carb Recipes">Low Carb Recipes</a></li>
+            <li><a href="/highprotein" accesskey="3" title="High Protein Recipes">High Protein Recipe</a></li>
+            <li><a href="/lowfat" accesskey="4" title="Low Fat Recipes">Low Fat Recipes</a></li>
+            <li class="current_page_item"><a href="/lowcalorie" accesskey="5" title="Low Calorie Recipes">Low Calorie Recipes</a></li>
+        </ul>
+    </div>
+</div>
+</div>
+        <div id="extra" class="container">
+            <div class="title">
+                    <h2> Low Calorie Recipes </h2>
+            </div>
+            <ul id="lcalrecipeList">
+                {{#if recipe}}
+                {{#each recipe}}
+                <h2> {{this.name}} </h2>
+                    <li>Written by {{this.author}}</li>
+                    <li>Number of servings: {{this.servings}}</li>
+                    <li>Calories per serving: {{this.calories}}</li>
+                    <li>Protein per serving (g): {{this.protein}}</li>
+                    <li>Carbohydrates per serving (g): {{this.carbs}}</li>
+                    <li>Fats per serving (g): {{this.fats}}</li>
+                    <li>Ingredients: {{this.ingredients}}</li>
+                    <li>Directions: {{this.directions}}</li>
+                    <li><a href="/add/{{this.id}}">View Reviews</a></li>
+                    <br>
+                {{/each}}
+                {{else}}
+                <br> No low calorie recipes found.
+                {{/if}}
+            </ul>
+        </div>
+</div>
+
+<!--
+    <h3>Add New Low Calorie Recipe</h3>
+    <article>
+        <form method="POST" action="/addRecipe">
+            <div class="input-field">
+                <label>Recipe Name:</label> <br>
+                <input type="text" name="name" size="50" placeholder="Recipe Name...">
+            </div>
+             <div class="input-field">
+                <label>Author:</label> <br>
+                <input type="text" name="author" size="50" placeholder="Author Name...">
+            </div>
+            <div class="input-field">
+                <label>Number of Servings:</label> <br>
+                <input type="text" name="servings" size="50" placeholder="Enter a number...">
+            </div>
+            <div class="input-field">
+                <label>Calories per serving:</label> <br>
+                <input type="text" name="calories" size="50" placeholder="Number of calories..">
+            </div>
+            <div class="input-field">
+                <label>Protein per serving (g):</label> <br>
+                <input type="text" name="protein" size="50" placeholder="Protein in grams..">
+            </div>
+            <div class="input-field">
+                <label>Carbohydrates per serving (g):</label> <br>
+                <input type="text" name="carbs" size="50" placeholder="Carbohydrates in grams..">
+            </div>
+            <div class="input-field">
+                <label>Fats per serving (g):</label> <br>
+                <input type="text" name="fats" size="50" placeholder="Fats in grams..">
+            </div>
+            <div class="input-field">
+                <label>Ingredients:</label> <br>
+                <textarea type="text" name="content" rows="3" placeholder="Enter Ingredients..."></textarea>
+            </div>
+            <div class="input-field">
+                <label>Directions:</label> <br>
+                <textarea type="text" name="content" rows="3" placeholder="Enter Directions"></textarea>
+            </div>
+            <button type="submit">Add New Recipe</button>
+        </form>
+    </article>
+-->

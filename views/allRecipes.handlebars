@@ -1,0 +1,222 @@
+<!--<script>
+var socket = io();
+
+$('#addHPRecipe').submit(function() {
+        var name = $('#name').val();
+        var author = $('#author').val();
+        var servings = $('#servings').val();
+        var calories = $('#calories').val();
+        var protein = $('#protein').val();
+        var carbs = $('#carbs').val();
+        var fats = $('#fats').val();
+        var ingredients = $('#ingredients').val();
+        var directions = $('#directions').val();
+        var reviews = $('#reviews').val();
+
+        $('#name').val('');
+        $('#author').val('');
+        $('#servings').val('');
+        $('#calories').val('');
+        $('#protein').val('');
+        $('#carbs').val('');
+        $('#fats').val();
+        $('#ingredients').val();
+        $('#directions').val();
+        $('#reviews').val();
+        $.ajax({
+            type: "POST",
+            url: '/highprotein',
+            data: {
+                name: name,
+                author: author,
+                servings: servings,
+                calories: calories,
+                protein: protein,
+                carbs: carbs,
+                fats: fats,
+                ingredients: ingredients,
+                directions: directions,
+                reviews: reviews
+                    },
+            success: function(data, status){
+                console.log(data);
+            }
+        });
+        return false;
+    });
+
+    socket.on('new recipe', function(recipe) {
+        $('#recipeList').append($('<li>').text(recipe.name + ' by ' + recipe.author));
+        $('#recipeList').append($('<li>').text("Servings: " + recipe.servings));
+        $('#recipeList').append($('<li>').text("Calories: " + recipe.calories));
+        $('#recipeList').append($('<li>').text("Protein per serving (g): " + recipe.protein));
+        $('#recipeList').append($('<li>').text("Carbohydrates per serving (g): " + recipe.carbs));
+        $('#recipeList').append($('<li>').text("Fats per serving (g): " + recipe.fats));
+        $('#recipeList').append($('<li>').text("Ingredients: " + recipe.ingredients));
+        $('#recipeList').append($('<li>').text("Directions: " + recipe.directions));
+    });
+</script> -->
+<script>
+         function onKeyUp() {
+                 //console.log("this is happening");
+
+                 var count = 0;
+                 $("#recipeList").empty();
+                 var s = $("#input_recipe").val();
+
+                 var r = s.replace(/\s/g, '');
+
+                 r = r.toLowerCase();
+
+                 {{#each recipe}}
+                      var count = 0;
+
+                      var name = "{{this.name}}".replace(/\s/g, '');
+                      name = name.replace('&#x27;', '\'');
+                      name = name.toLowerCase();
+                     // console.log(name);
+                    //  console.log(r);
+                          if (r == name) {
+                              count = count + 1;
+                              $("#recipeList").empty();
+                              $('#recipeList').append("<h2> {{this.name}} </h2>" +
+                                  "<li>Written by {{this.author}}</li>" +
+                                  "<li>Number of servings: {{this.servings}}</li>" +
+                                  "<li>Calories per serving: {{this.calories}}</li>" +
+                                  "<li>Protein per serving (g): {{this.protein}}</li>" +
+                                  "<li>Carbohydrates per serving (g): {{this.carbs}}</li>" +
+                                  "<li>Fats per serving (g): {{this.fats}}</li>" +
+                                  "<li>Ingredients: " + `{{this.ingredients}}` + "</li>" +
+                                  "<li>Directions: " + `{{this.directions}}` + "</li>" +
+                                 "<li><a href='/add/{{this.id}}'>View Reviews</a></li>" +
+                                  "<br>");
+                             // $(this).show();
+
+                          } else {
+                              $(this).fadeOut();
+                          }
+                {{/each}}
+                if (count == 0) {
+                    $("#recipeList").append("This recipe does not exist.");
+                } else {
+                $("#recipeList").append("Number of Recipes: " + count);
+            }
+         };
+
+</script>
+
+<div id="wrapper">
+    <div id="header-wrapper">
+    <div id="header" class="container">
+        <div id="logo">
+            <a href="#"><h1>MacroMore</h1></a>
+        </div>
+    <!-- nav bar -->
+    <div id= "menu">
+        <ul>
+            <li class="current_page_item"><a href="/" accesskey="1" title="All Recipes">All Recipes</a></li>
+            <li><a href="/lowcarb" accesskey="2" title="Low Carb Recipes">Low Carb Recipes</a></li>
+            <li><a href="/highprotein" accesskey="3" title="High Protein Recipes">High Protein Recipe</a></li>
+            <li><a href="/lowfat" accesskey="4" title="Low Fat Recipes">Low Fat Recipes</a></li>
+            <li><a href="/lowcalorie" accesskey="5" title="Low Calorie Recipes">Low Calorie Recipes</a></li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<body>
+    <!--    Search bar   -->
+    <div id="banner">
+        <div class="container">
+            <div class="title">
+                <h2>Search a recipe</h2>
+            </div>
+
+            <ul class="actions">
+                <li><input id = "input_recipe" type="text" placeholder="Type recipe names here" onkeyup="onKeyUp()"></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- List of All Recipes -->
+    <div id="extra" class="container">
+        <div class="title">
+                <h2> All Recipes </h2>
+        </div>
+        <ul id="recipeList">
+            {{#if recipe}}
+            {{#each recipe}}
+            <h2> {{this.name}} </h2>
+                <li>Written by {{this.author}}</li>
+                <li>Number of servings: {{this.servings}}</li>
+                <li>Calories per serving: {{this.calories}}</li>
+                <li>Protein per serving (g): {{this.protein}}</li>
+                <li>Carbohydrates per serving (g): {{this.carbs}}</li>
+                <li>Fats per serving (g): {{this.fats}}</li>
+                <li> Ingredients: </li>{{this.ingredients}}<br>
+                <li>Directions: {{this.directions}}</li>
+                <li><a href="/add/{{this.id}}">View Reviews</a></li>
+                <br>
+            {{/each}}
+            {{else}}
+            <br> No recipes found.
+            {{/if}}
+        </ul>
+        </div>
+
+        <!-- Add new recipe -->
+        <div id="featured">
+            <div class="container">
+                <div class="title">
+                    <h2>Add New Recipe</h2>
+
+                </div>
+                <ul><li>* = Required</li></ul>
+                <article>
+                    <form method="POST" action="/">
+                        <div class="input-field">
+                            <label>*Recipe Name:</label> <br>
+                            <input type="text" name="name" size="50" placeholder="Recipe Name...">
+                        </div>
+                         <div class="input-field">
+                            <label>*Author:</label> <br>
+                            <input type="text" name="author" size="50" placeholder="Author Name...">
+                        </div>
+                        <div class="input-field">
+                            <label>*Number of Servings:</label> <br>
+                            <input type="text" name="servings" size="50" placeholder="Enter a number...">
+                        </div>
+                        <div class="input-field">
+                            <label>*Calories per serving:</label> <br>
+                            <input type="text" name="calories" size="50" placeholder="Number of calories..">
+                        </div>
+                        <div class="input-field">
+                            <label>*Protein per serving (g):</label> <br>
+                            <input type="text" name="protein" size="50" placeholder="Protein in grams..">
+                        </div>
+                        <div class="input-field">
+                            <label>*Carbohydrates per serving (g):</label> <br>
+                            <input type="text" name="carbs" size="50" placeholder="Carbohydrates in grams..">
+                        </div>
+                        <div class="input-field">
+                            <label>*Fats per serving (g):</label> <br>
+                            <input type="text" name="fats" size="50" placeholder="Fats in grams..">
+                        </div>
+                        <div class="input-field">
+                            <label>*Ingredients:</label> <br>
+                            <textarea type="text" name="ingredients" rows="3" placeholder="Enter Ingredients..."></textarea>
+                        </div>
+                        <div class="input-field">
+                            <label>*Directions:</label> <br>
+                            <textarea type="text" name="directions" rows="3" placeholder="Enter Directions"></textarea>
+                        </div>
+                        <ul class="actions">
+                            <button type="submit">Add New Recipe</button>
+                        </ul>
+                    </form>
+                </article>
+            </div>
+
+        </div>
+    </div>
+</body>
